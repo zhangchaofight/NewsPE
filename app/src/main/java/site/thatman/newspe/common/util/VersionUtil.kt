@@ -4,6 +4,7 @@ import android.content.Context
 import com.tencent.mmkv.MMKV
 import site.thatman.newspe.bussiness.bean.localBean.Version
 import site.thatman.newspe.common.key.LocalKeys
+import timber.log.Timber
 
 object VersionUtil {
 
@@ -17,15 +18,19 @@ object VersionUtil {
             val current = Version(cVersionCode, 1,
                     System.currentTimeMillis())
             mmkv.encode(LocalKeys.VERSION.CURRENT_VERSION, GsonUtil.toJson(current))
+            Timber.d("VersionUtil record: currentVersionCode = $cVersionCode ~~~ completely New run")
         } else {
-            val cVersion = GsonUtil.fromJson(cVersionJson) as Version
+            val cVersion = GsonUtil.fromJson(cVersionJson, Version::class.java)
             if (cVersionCode == cVersion.version) {
                 cVersion.lunchTimes = cVersion.lunchTimes + 1
-            } else {
                 mmkv.encode(LocalKeys.VERSION.CURRENT_VERSION, GsonUtil.toJson(cVersion))
+                Timber.d("VersionUtil record: currentVersionCode = $cVersionCode ~~~${cVersion.lunchTimes} lunch")
+            } else {
+                mmkv.encode(LocalKeys.VERSION.LAST_VERSION, GsonUtil.toJson(cVersion))
                 val current = Version(cVersionCode, 1,
                         System.currentTimeMillis())
-                mmkv.encode(LocalKeys.VERSION.LAST_VERSION, GsonUtil.toJson(current))
+                mmkv.encode(LocalKeys.VERSION.CURRENT_VERSION, GsonUtil.toJson(current))
+                Timber.d("VersionUtil record: currentVersionCode = $cVersionCode ~~~ update from ${cVersion.version}")
             }
         }
     }

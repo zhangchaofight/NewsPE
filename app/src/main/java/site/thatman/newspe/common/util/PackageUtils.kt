@@ -10,7 +10,8 @@ object PackageUtils {
         val manager = context.packageManager
         return try {
             val info = manager.getPackageInfo(context.packageName, 0)
-            info.longVersionCode
+            @Suppress("DEPRECATION")
+            info.versionCode.toLong()
         } catch (e: PackageManager.NameNotFoundException) {
             // never run.
             e.printStackTrace()
