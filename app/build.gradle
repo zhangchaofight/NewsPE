@@ -25,7 +25,7 @@ android {
     compileSdkVersion build_versions.target_sdk
     buildToolsVersion build_versions.build_tools
     defaultConfig {
-        applicationId "paging.android.example.com.pagingsample"
+        applicationId "thatman.site.newspe"
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
         versionCode 1

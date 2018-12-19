@@ -3,4 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/count_down"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
