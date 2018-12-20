@@ -1,7 +1,6 @@
 package site.thatman.newspe.bussiness.app
 
 import android.app.Application
-import android.content.Context
 import com.example.zhangchao.newspe.BuildConfig
 import com.tencent.mmkv.MMKV
 import site.thatman.newspe.common.crash.CrashReportingTree
