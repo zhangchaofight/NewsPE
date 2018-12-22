@@ -8,6 +8,7 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_scsplash.*
+import site.thatman.newspe.bussiness.data.RemoteData
 import site.thatman.newspe.common.extension.ioToMain
 import site.thatman.newspe.common.extension.obOnNewThread
 import site.thatman.newspe.common.widget.SCToast
@@ -40,6 +41,34 @@ class SCSplashActivity : AppCompatActivity() {
                 .subscribeBy(
                         onNext = {
                             SCToast.show(it.toString())
+                        }
+                ))
+        count_down.setOnClickListener {
+            RemoteData.getBaidu()
+                    .ioToMain()
+                    .subscribeBy(
+                            onNext = {
+                                val i = 0
+                                baidu_string.text = it.string()
+                            },
+                            onError = {
+                                val i = 0
+                            }
+                    )
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mDisposable.add(RemoteData.getBaidu()
+                .ioToMain()
+                .subscribeBy(
+                        onNext = {
+                            val i = 0
+                            baidu_string.text = it.string()
+                        },
+                        onError = {
+                            val i = 0
                         }
                 ))
     }
