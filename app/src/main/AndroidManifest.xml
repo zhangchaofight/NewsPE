@@ -25,21 +25,30 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <!--GoogleAppIndexingWarning的介绍-->
-        <!--https://www.jianshu.com/p/1327bbcd7a76-->
-        <!--https://firebase.google.com/docs/app-indexing/-->
-        <activity android:name="site.thatman.newspe.bussiness.mvp.view.SCSplashActivity">
+
+        <!-- GoogleAppIndexingWarning的介绍 -->
+        <!-- https://www.jianshu.com/p/1327bbcd7a76 -->
+        <!-- https://firebase.google.com/docs/app-indexing/ -->
+        <activity
+            android:name="site.thatman.newspe.bussiness.mvp.view.SCSplashActivity"
+            android:theme="@style/SCSplash_Theme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="site.thatman.newspe.bussiness.mvp.view.SCMainActivity"
+        <activity
+            android:name="site.thatman.newspe.bussiness.mvp.view.SCMainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|layoutDirection"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name="site.thatman.newspe.bussiness.mvp.view.SCDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden|layoutDirection"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
     </application>
 
 </manifest>

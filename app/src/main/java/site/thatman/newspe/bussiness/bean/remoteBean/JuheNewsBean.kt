@@ -19,4 +19,8 @@ data class JuheNewsBean(
         other as JuheNewsBean
         return uniqueKey == other.uniqueKey
     }
+
+    override fun hashCode(): Int {
+        return uniqueKey.hashCode()
+    }
 }

@@ -19,9 +19,9 @@ object HttpManager {
     private lateinit var baiduRetrofit: Retrofit
     private lateinit var scRetrofit: Retrofit
 
-    init {
-        initRetrofit()
-    }
+//    init {
+//        initRetrofit()
+//    }
 
     private fun getBaiduClient(): OkHttpClient {
         return OkHttpClient.Builder()
@@ -44,7 +44,7 @@ object HttpManager {
                 .build()
     }
 
-    private fun initRetrofit() {
+    fun initRetrofit() {
         juheRetrofit = Retrofit.Builder()
                 .baseUrl(JUHE_NEWS_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -63,14 +63,11 @@ object HttpManager {
                 .client(getBaiduClient())
                 .build()
 
-        scRetrofit = Retrofit.Builder()
-                .baseUrl(SC_SERVER_URL)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                //下面一句可以传入gson对象，用来自定义gson转换规则
-                //gson.registerTypeAdapter(class, adapter)
-//                .addConverterFactory(GsonConverterFactory.create())
-                .client(getBaiduClient())
-                .build()
+//        scRetrofit = Retrofit.Builder()
+//                .baseUrl(SC_SERVER_URL)
+//                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+//                .client(getBaiduClient())
+//                .build()
     }
 
     fun getJuheRetrofit() = juheRetrofit

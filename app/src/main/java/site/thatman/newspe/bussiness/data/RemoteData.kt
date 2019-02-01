@@ -15,8 +15,7 @@ object RemoteData {
     private val juheNewsAPI by lazy { HttpManager.getJuheRetrofit().create(JuheNewsAPI::class.java) }
     private val baiduAPI by lazy { HttpManager.getBaiduRetrofit().create(BaiduAPI::class.java) }
 
-    fun getJuheNews(index: String = DataEnum.JuheNewsIndex.TOP.index):Observable<JuheNewsWrapper>
-            = juheNewsAPI.getNews(index, DataEnum.JuheKeys.JUHE_NEWS_KEY).callJuheAPI()
+    fun getJuheNews(index: String = DataEnum.JuheNewsIndex.TOP.index): Observable<JuheNewsWrapper> = juheNewsAPI.getNews(index, DataEnum.JuheKeys.JUHE_NEWS_KEY).callJuheAPI()
 
-    fun getBaidu(): Observable<ResponseBody> =  baiduAPI.baidu()
+    fun getBaidu(): Observable<ResponseBody> = baiduAPI.baidu()
 }

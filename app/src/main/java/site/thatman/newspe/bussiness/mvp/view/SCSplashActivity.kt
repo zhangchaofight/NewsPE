@@ -3,10 +3,12 @@ package site.thatman.newspe.bussiness.mvp.view
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.zhangchao.newspe.R
+import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
-import site.thatman.newspe.bussiness.data.RemoteData
+import org.jetbrains.anko.startActivity
 import site.thatman.newspe.common.extension.ioToMain
+import java.util.concurrent.TimeUnit
 
 class SCSplashActivity : AppCompatActivity() {
 
@@ -15,17 +17,13 @@ class SCSplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scsplash)
-        mDisposable.add(RemoteData.getJuheNews()
+        mDisposable.add(Observable.interval(2, 0L, TimeUnit.SECONDS)
+                .take(1)
                 .ioToMain()
-                .subscribeBy(
-                        onNext = {
-                            val i = 0
-                        },
-                        onError = {
-                            val i = 0
-                        }
-                )
-        )
+                .subscribeBy {
+                    startActivity<SCMainActivity>()
+                    finish()
+                })
     }
 
     override fun onDestroy() {
