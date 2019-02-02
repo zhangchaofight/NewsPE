@@ -1,19 +1,23 @@
 package site.thatman.newspe.bussiness.app
 
 import android.app.Application
+import androidx.multidex.MultiDexApplication
 import com.example.zhangchao.newspe.BuildConfig
 import com.tencent.mmkv.MMKV
 import io.reactivex.disposables.CompositeDisposable
+import site.thatman.newspe.bussiness.db.SCDatabase
+import site.thatman.newspe.bussiness.task.InitTask
 import site.thatman.newspe.common.crash.CrashReportingTree
 import site.thatman.newspe.common.network.HttpManager
 import site.thatman.newspe.common.util.VersionUtil
 import timber.log.Timber
 
-class SCApp : Application() {
+class SCApp : MultiDexApplication() {
 
     companion object {
         lateinit var context: Application
         val mAppDisposable = CompositeDisposable()
+        lateinit var scDatabase: SCDatabase
     }
 
     init {
@@ -36,5 +40,8 @@ class SCApp : Application() {
         MMKV.initialize(this)
         VersionUtil.onAppRun(this)
         HttpManager.initRetrofit()
+        scDatabase = SCDatabase.getInstance(this)
+
+        InitTask.fetchJuheData()
     }
 }

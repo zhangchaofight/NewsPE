@@ -1,17 +1,20 @@
 package site.thatman.newspe.bussiness.mvp.view
 
 import android.os.Bundle
+import android.widget.LinearLayout.VERTICAL
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.zhangchao.newspe.R
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_scmain.*
-import site.thatman.newspe.bussiness.bean.remoteBean.JuheNewsWrapper
-import site.thatman.newspe.bussiness.data.RemoteData
+import org.jetbrains.anko.toast
+import site.thatman.newspe.bussiness.bean.remoteBean.JuheNewsBean
+import site.thatman.newspe.bussiness.data.DBData
 import site.thatman.newspe.bussiness.items.JuheNewsItem
-import site.thatman.newspe.common.extension.ioToMain
+import site.thatman.newspe.common.util.ResUtils
 
 class SCMainActivity : AppCompatActivity() {
 
@@ -23,10 +26,9 @@ class SCMainActivity : AppCompatActivity() {
         fetchData()
     }
 
-    private fun fetchData(){
-        mDisposable.add(RemoteData.getJuheNews()
-                .ioToMain()
-                .subscribeBy (
+    private fun fetchData() {
+        mDisposable.add(DBData.getJuheData()
+                .subscribeBy(
                         onNext = {
                             fetchSucc(it)
                         },
@@ -36,23 +38,26 @@ class SCMainActivity : AppCompatActivity() {
                 ))
     }
 
-    private fun fetchSucc(newsWrapper: JuheNewsWrapper) {
-        if (newsWrapper.data == null || newsWrapper.data.isEmpty()){
+    private fun fetchSucc(juheNewsList: List<JuheNewsBean>) {
+        if (juheNewsList.isEmpty()) {
             fetchFail()
             return
         }
         val items = mutableListOf<JuheNewsItem>()
-        newsWrapper.data.forEach {
+        juheNewsList.forEach {
             val item = JuheNewsItem(it)
             items.add(item)
         }
         val adapter = FlexibleAdapter(items)
         rv_activity_main.layoutManager = LinearLayoutManager(this)
+        val decoration = DividerItemDecoration(this@SCMainActivity, VERTICAL)
+        decoration.setDrawable(ResUtils.getDrawable(R.drawable.decoration_juhe_news))
+        rv_activity_main.addItemDecoration(decoration)
         rv_activity_main.adapter = adapter
     }
 
     private fun fetchFail() {
-
+        toast("取数据库错误")
     }
 
     override fun onDestroy() {
