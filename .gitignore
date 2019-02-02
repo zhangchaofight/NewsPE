@@ -7,3 +7,5 @@
 /build
 /captures
 .externalNativeBuild
+/app/src/main/java/site/thatman/newspe/common/key/DataEnum.kt
+.idea/caches/build_file_checksums.ser
